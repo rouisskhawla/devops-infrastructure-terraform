@@ -9,7 +9,9 @@ on:
 
 jobs:
   terraform:
-    runs-on: self-hosted
+    runs-on: [self-hosted, terraform]
+    environment:
+      name: development
     steps:
       - uses: actions/checkout@v4
 
