@@ -31,6 +31,7 @@ output "environment" {
 
 output "namespace_name" {
   value = module.namespace.namespace_name
+  description = "The name of the namespace created for the environment"
 }
 
 output "github_actions_kubeconfig" {
