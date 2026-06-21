@@ -25,6 +25,10 @@ module "github_actions_sa" {
   cluster_ca_cert   = var.cluster_ca_cert
 }
 
+output "environment" {
+  value = module.github_actions_sa.environment
+}
+
 output "namespace_name" {
   value = module.namespace.namespace_name
 }
