@@ -27,7 +27,6 @@ module "github_actions_sa" {
 
 output "environment" {
   value = module.github_actions_sa.environment
-  description = "The environment."
 }
 
 output "namespace_name" {
