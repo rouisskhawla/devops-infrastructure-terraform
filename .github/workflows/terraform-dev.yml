@@ -17,7 +17,7 @@ jobs:
 
       - name: Set up kubeconfig
         run: |
-          mkdir -p ~/.kube
+          mkdir -p ~/.kube/dev
           echo "${{ secrets.DEV_ADMIN_KUBECONFIG }}" > ~/.kube/dev/config
 
       - name: Terraform Apply
