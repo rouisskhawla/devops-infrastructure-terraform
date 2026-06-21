@@ -1,0 +1,28 @@
+name: Terraform Apply - Dev
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'environments/dev/**'
+      - 'modules/**'
+
+jobs:
+  terraform:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up kubeconfig
+        run: |
+          mkdir -p ~/.kube
+          echo "${{ secrets.DEV_ADMIN_KUBECONFIG }}" > ~/.kube/dev/config
+
+      - name: Terraform Apply
+        working-directory: environments/dev
+        env:
+          TF_VAR_cluster_api_server: ${{ secrets.DEV_CLUSTER_API_SERVER }}
+          TF_VAR_cluster_ca_cert:    ${{ secrets.DEV_CLUSTER_CA_CERT }}
+        run: |
+          terraform init
+          terraform apply -auto-approve
