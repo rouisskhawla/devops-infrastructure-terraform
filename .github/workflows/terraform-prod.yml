@@ -1,0 +1,49 @@
+name: Terraform Apply - Prod
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'environments/prod/**'
+      - 'modules/**'
+
+jobs:
+  terraform:
+    runs-on: [self-hosted, terraform]
+    environment:
+      name: production
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: "1.6.6"
+
+      - name: Set up kubeconfig
+        run: |
+          mkdir -p ~/.kube/prod
+          echo "${{ secrets.PROD_ADMIN_KUBECONFIG }}" > ~/.kube/prod/config
+          chmod 600 ~/.kube/prod/config
+
+      - name: Terraform Init
+        working-directory: environments/prod
+        env:
+          CONSUL_HTTP_TOKEN: ${{ secrets.CONSUL_HTTP_TOKEN }}
+        run: terraform init
+
+      - name: Terraform Plan
+        working-directory: environments/prod
+        env:
+          CONSUL_HTTP_TOKEN: ${{ secrets.CONSUL_HTTP_TOKEN }}
+          TF_VAR_cluster_api_server: ${{ secrets.PROD_CLUSTER_API_SERVER }}
+          TF_VAR_cluster_ca_cert: ${{ secrets.PROD_CLUSTER_CA_CERT }}
+        run: terraform plan
+
+      - name: Terraform Apply
+        working-directory: environments/prod
+        env:
+          CONSUL_HTTP_TOKEN: ${{ secrets.CONSUL_HTTP_TOKEN }}
+          TF_VAR_cluster_api_server: ${{ secrets.PROD_CLUSTER_API_SERVER }}
+          TF_VAR_cluster_ca_cert: ${{ secrets.PROD_CLUSTER_CA_CERT }}
+        run: terraform apply -auto-approve
