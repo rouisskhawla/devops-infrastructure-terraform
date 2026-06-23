@@ -1,5 +1,8 @@
 terraform {
-    backend "local" {
-        path = "../../.tfstate/prod/terraform.tfstate"
-    }
+  backend "consul" {
+    address = "192.168.56.102:8500"
+    scheme  = "http"
+    path    = "terraform/prod"
+    lock    = true
+  }
 }
