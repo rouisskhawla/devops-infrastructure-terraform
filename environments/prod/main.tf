@@ -3,6 +3,13 @@ provider "kubernetes" {
   config_context = "prod-admin@prod-cluster"
 }
 
+provider "helm" {
+  kubernetes = {
+    config_path    = "~/.kube/prod/config"
+    config_context = "prod-admin@prod-cluster"
+  }
+}
+
 variable "cluster_api_server" {
   type = string
 }
@@ -25,8 +32,9 @@ module "github_actions_sa" {
   cluster_ca_cert   = var.cluster_ca_cert
 }
 
-output "environment" {
-  value = module.github_actions_sa.environment
+module "ingress" {
+  source = "../../modules/ingress"
+  namespace = "ingress-nginx"
 }
 
 output "namespace_name" {
@@ -36,4 +44,8 @@ output "namespace_name" {
 output "github_actions_kubeconfig" {
   value     = module.github_actions_sa.kubeconfig
   sensitive = true
+}
+
+output "ingress_controller_installation_status" {
+  value = module.ingress.installation_status
 }
