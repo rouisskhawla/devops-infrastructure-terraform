@@ -38,6 +38,7 @@ jobs:
           CONSUL_HTTP_TOKEN: ${{ secrets.CONSUL_HTTP_TOKEN }}
           TF_VAR_cluster_api_server: ${{ secrets.PROD_CLUSTER_API_SERVER }}
           TF_VAR_cluster_ca_cert: ${{ secrets.PROD_CLUSTER_CA_CERT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN_TERRAFORM }}
         run: terraform plan
 
       - name: Terraform Apply
@@ -46,4 +47,5 @@ jobs:
           CONSUL_HTTP_TOKEN: ${{ secrets.CONSUL_HTTP_TOKEN }}
           TF_VAR_cluster_api_server: ${{ secrets.PROD_CLUSTER_API_SERVER }}
           TF_VAR_cluster_ca_cert: ${{ secrets.PROD_CLUSTER_CA_CERT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN_TERRAFORM }}
         run: terraform apply -auto-approve

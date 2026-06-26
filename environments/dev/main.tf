@@ -10,6 +10,10 @@ provider "helm" {
   }
 }
 
+provider "github" {
+  owner = "rouisskhawla"
+}
+
 variable "cluster_api_server" {
   type = string
 }
@@ -35,6 +39,12 @@ module "github_actions_sa" {
 module "ingress" {
   source = "../../modules/ingress"
   namespace = "ingress-nginx"
+}
+
+resource "github_actions_secret" "kubeconfig_dev" {
+  repository      = "reliable-ci-cd-pipeline"
+  secret_name     = "KUBECONFIG_DEV"
+  plaintext_value = module.github_actions_sa.kubeconfig
 }
 
 output "namespace_name" {

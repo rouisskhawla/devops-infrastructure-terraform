@@ -1,11 +1,11 @@
-resource "kubernetes_service_account" "github_actions" {
+resource "kubernetes_service_account_v1" "github_actions" {
   metadata {
     name      = "github-actions"
     namespace = var.namespace
   }
 }
 
-resource "kubernetes_cluster_role" "deployer" {
+resource "kubernetes_cluster_role_v1" "deployer" {
   metadata {
     name = "github-actions-${var.environment}-deployer"
   }
@@ -17,7 +17,7 @@ resource "kubernetes_cluster_role" "deployer" {
   }
 }
 
-resource "kubernetes_role_binding" "deployer" {
+resource "kubernetes_role_binding_v1" "deployer" {
   metadata {
     name      = "github-actions-deployer-binding"
     namespace = var.namespace
@@ -26,22 +26,22 @@ resource "kubernetes_role_binding" "deployer" {
   role_ref {
     api_group = "rbac.authorization.k8s.io"
     kind      = "ClusterRole"
-    name      = kubernetes_cluster_role.deployer.metadata[0].name
+    name      = kubernetes_cluster_role_v1.deployer.metadata[0].name
   }
 
   subject {
     kind      = "ServiceAccount"
-    name      = kubernetes_service_account.github_actions.metadata[0].name
+    name      = kubernetes_service_account_v1.github_actions.metadata[0].name
     namespace = var.namespace
   }
 }
 
-resource "kubernetes_secret" "token" {
+resource "kubernetes_secret_v1" "token" {
   metadata {
     name      = "github-actions-token"
     namespace = var.namespace
     annotations = {
-      "kubernetes.io/service-account.name" = kubernetes_service_account.github_actions.metadata[0].name
+      "kubernetes.io/service-account.name" = kubernetes_service_account_v1.github_actions.metadata[0].name
     }
   }
   type = "kubernetes.io/service-account-token"
@@ -63,7 +63,7 @@ locals {
     users = [{
       name = "github-actions"
       user = {
-        token = kubernetes_secret.token.data["token"]
+        token = kubernetes_secret_v1.token.data["token"]
       }
     }]
 

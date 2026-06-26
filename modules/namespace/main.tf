@@ -1,4 +1,4 @@
-resource "kubernetes_namespace" "env" {
+resource "kubernetes_namespace_v1" "env" {
     metadata {
         name = var.environment
         labels = {
