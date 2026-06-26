@@ -44,7 +44,7 @@ module "ingress" {
 resource "github_actions_secret" "kubeconfig_dev" {
   repository      = "reliable-ci-cd-pipeline"
   secret_name     = "KUBECONFIG_DEV"
-  plaintext_value = module.github_actions_sa.kubeconfig
+  value = module.github_actions_sa.kubeconfig
 }
 
 output "namespace_name" {
