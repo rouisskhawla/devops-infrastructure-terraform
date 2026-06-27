@@ -1,5 +1,8 @@
 # devops-infrastructure-terraform
 
+![Terraform Apply - Dev](https://github.com/rouisskhawla/devops-infrastructure-terraform/actions/workflows/terraform-dev.yml/badge.svg)
+![Terraform Apply - Prod](https://github.com/rouisskhawla/devops-infrastructure-terraform/actions/workflows/terraform-prod.yml/badge.svg)
+
 Terraform infrastructure for the `reliable-ci-cd-pipeline` monorepo. Provisions Kubernetes namespaces, RBAC, NGINX Ingress Controller, TLS certificates, and GitHub Actions credentials across three environments: `local`, `dev`, and `prod`.
 
 ---
