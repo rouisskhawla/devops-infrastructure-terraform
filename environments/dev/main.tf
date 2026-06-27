@@ -15,7 +15,7 @@ provider "github" {
 }
 
 variable "cluster_api_server" {
-  type        = string
+  type = string
 }
 
 variable "cluster_ca_cert" {
