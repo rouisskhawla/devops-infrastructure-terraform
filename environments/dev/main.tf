@@ -16,11 +16,13 @@ provider "github" {
 
 variable "cluster_api_server" {
   type = string
+  description = "The API server endpoint of the Kubernetes cluster"
 }
 
 variable "cluster_ca_cert" {
   type = string
   sensitive = true
+  description = "The CA certificate for the Kubernetes cluster"
 }
 
 module "namespace" {
