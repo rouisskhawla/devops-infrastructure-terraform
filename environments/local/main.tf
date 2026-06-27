@@ -11,11 +11,11 @@ provider "helm" {
 }
 
 module "namespace" {
-    source = "../../modules/namespace"
-    environment = "local"
+  source      = "../../modules/namespace"
+  environment = "local"
 }
 
 output "namespace_name" {
-    description = "namespace created"
-    value = module.namespace.namespace_name
+  description = "namespace created"
+  value       = module.namespace.namespace_name
 }

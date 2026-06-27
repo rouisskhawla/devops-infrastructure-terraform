@@ -1,4 +1,4 @@
-name: Terraform Apply - Prod
+name: Terraform Workflow - Prod
 
 on:
   push:

@@ -55,7 +55,7 @@ locals {
     clusters = [{
       name = "${var.environment}-cluster"
       cluster = {
-        server = var.cluster_api_server
+        server                     = var.cluster_api_server
         certificate-authority-data = var.cluster_ca_cert
       }
     }]

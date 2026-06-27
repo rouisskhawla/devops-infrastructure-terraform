@@ -3,7 +3,7 @@ variable "environment" {
 }
 
 variable "namespace" {
-  type = string 
+  type = string
 }
 
 variable "cluster_api_server" {

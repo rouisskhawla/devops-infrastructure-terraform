@@ -1,4 +1,4 @@
-name: Terraform Apply - Dev
+name: Terraform Workflow - Dev
 
 on:
   push:
@@ -8,8 +8,13 @@ on:
       - 'modules/**'
 
 jobs:
+  validate:
+    uses: rouisskhawla/github-shared-workflow/.github/workflows/terraform-validate.yml@main
+
   plan:
     runs-on: [self-hosted, terraform]
+    needs: validate
+
     steps:
       - uses: actions/checkout@v4
 
@@ -23,14 +28,6 @@ jobs:
           mkdir -p ~/.kube/dev
           echo "${{ secrets.DEV_ADMIN_KUBECONFIG }}" > ~/.kube/dev/config
           chmod 600 ~/.kube/dev/config
-
-      - name: Terraform Format Check
-        working-directory: environments/dev
-        run: terraform fmt -check -recursive
-
-      - name: Terraform Validate
-        working-directory: environments/dev
-        run: terraform validate
 
       - name: Terraform Init
         working-directory: environments/dev
