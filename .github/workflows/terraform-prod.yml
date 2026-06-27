@@ -8,8 +8,13 @@ on:
       - 'modules/**'
 
 jobs:
+  validate:
+    uses: rouisskhawla/github-shared-workflow/.github/workflows/terraform-validate.yml@main
+
   plan:
     runs-on: [self-hosted, terraform]
+    needs: validate
+
     steps:
       - uses: actions/checkout@v4
 
@@ -23,14 +28,6 @@ jobs:
           mkdir -p ~/.kube/prod
           echo "${{ secrets.PROD_ADMIN_KUBECONFIG }}" > ~/.kube/prod/config
           chmod 600 ~/.kube/prod/config
-
-      - name: Terraform Format Check
-        working-directory: environments/prod
-        run: terraform fmt -check -recursive
-
-      - name: Terraform Validate
-        working-directory: environments/prod
-        run: terraform validate
 
       - name: Terraform Init
         working-directory: environments/prod
