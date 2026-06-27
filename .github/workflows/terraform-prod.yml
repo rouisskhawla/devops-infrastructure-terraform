@@ -53,7 +53,7 @@ jobs:
           name: tfplan
           path: environments/prod/tfplan
 
-    apply:
+  apply:
     runs-on: [self-hosted, terraform]
     needs: plan
 
