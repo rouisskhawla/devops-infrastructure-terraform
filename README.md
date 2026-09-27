@@ -3,7 +3,9 @@
 ![Terraform Apply - Dev](https://github.com/rouisskhawla/devops-infrastructure-terraform/actions/workflows/terraform-dev.yml/badge.svg)
 ![Terraform Apply - Prod](https://github.com/rouisskhawla/devops-infrastructure-terraform/actions/workflows/terraform-prod.yml/badge.svg)
 
-Terraform infrastructure for the `reliable-ci-cd-pipeline` monorepo. Provisions Kubernetes namespaces, RBAC, NGINX Ingress Controller, TLS certificates, and GitHub Actions credentials across three environments: `local`, `dev`, and `prod`.
+Terraform infrastructure for the [reliable-ci-cd-pipeline](https://github.com/rouisskhawla/reliable-ci-cd-pipeline) monorepo. Provisions Kubernetes namespaces, RBAC, NGINX Ingress Controller, TLS certificates, and GitHub Actions credentials across three environments: `local`, `dev`, and `prod`.
+
+CI CD for the code is in a separte repo as well [github-shared-workflow](https://github.com/rouisskhawla/github-shared-workflow)
 
 ---
 
@@ -228,7 +230,5 @@ terraform apply
 
 | Repository | Purpose |
 |---|---|
-| [reliable-ci-cd-pipeline](https://github.com/rouisskhawla/reliable-ci-cd-pipeline) | Monorepo: application code and GitHub Actions workflow callers |
-| [github-shared-workflow](https://github.com/rouisskhawla/github-shared-workflow) | Reusable GitHub Actions pipeline used by all services |
-| [jenkins-shared-library](https://github.com/rouisskhawla/jenkins-shared-library) | Equivalent shared pipeline for Jenkins |
-| [gitlab-shared-template](https://github.com/rouisskhawla/gitlab-shared-template) | Equivalent shared pipeline for GitLab CI |
+| [reliable-ci-cd-pipeline](https://github.com/rouisskhawla/reliable-ci-cd-pipeline) | Code Monorepo: application code and GitHub Actions workflow callers |
+| [github-shared-workflow](https://github.com/rouisskhawla/github-shared-workflow) | CI CD repo:Reusable GitHub Actions pipeline used by all services |
