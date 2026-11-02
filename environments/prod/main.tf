@@ -1,29 +1,3 @@
-provider "kubernetes" {
-  config_path    = "~/.kube/prod/config"
-  config_context = "prod-admin@prod-cluster"
-}
-
-provider "helm" {
-  kubernetes = {
-    config_path    = "~/.kube/prod/config"
-    config_context = "prod-admin@prod-cluster"
-  }
-}
-
-provider "github" {
-  owner = "rouisskhawla"
-}
-
-variable "cluster_api_server" {
-  type        = string
-  description = "The API server endpoint of the Kubernetes cluster."
-}
-
-variable "cluster_ca_cert" {
-  type      = string
-  sensitive = true
-}
-
 module "namespace" {
   source      = "../../modules/namespace"
   environment = "prod"
@@ -48,15 +22,12 @@ resource "github_actions_secret" "kubeconfig_prod" {
   value       = module.github_actions_sa.kubeconfig
 }
 
-output "namespace_name" {
-  value = module.namespace.namespace_name
+module "monitoring" {
+  source           = "../../modules/monitoring"
+  grafana_password = var.grafana_password
 }
 
-output "github_actions_kubeconfig" {
-  value     = module.github_actions_sa.kubeconfig
-  sensitive = true
-}
-
-output "ingress_controller_installation_status" {
-  value = module.ingress.installation_status
+module "flagger" {
+  source         = "../../modules/flagger"
+  prometheus_url = module.monitoring.prometheus_url
 }
