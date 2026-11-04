@@ -15,4 +15,5 @@ resource "helm_release" "prometheus_stack" {
       value = var.grafana_password
     }
   ]
+  values = [file("${path.module}/pod-scrape.yaml")]
 }
