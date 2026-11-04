@@ -15,8 +15,13 @@ resource "kubernetes_cluster_role_v1" "deployer" {
     resources  = ["pods", "deployments", "services", "configmaps", "secrets", "ingresses", "namespaces"]
     verbs      = ["get", "list", "watch", "create", "update", "patch", "delete"]
   }
-}
 
+  rule {
+    api_groups = ["flagger.app"]
+    resources  = ["canaries"]
+    verbs      = ["get", "list", "watch", "create", "update", "patch", "delete"]
+  }
+}
 resource "kubernetes_role_binding_v1" "deployer" {
   metadata {
     name      = "github-actions-deployer-binding"
