@@ -84,3 +84,35 @@ locals {
     current-context = "github-actions@${var.environment}"
   })
 }
+
+resource "kubernetes_role_v1" "spring_cloud_k8s" {
+  metadata {
+    name      = "spring-cloud-k8s"
+    namespace = var.namespace
+  }
+
+  rule {
+    api_groups = [""]
+    resources  = ["pods", "configmaps", "services"]
+    verbs      = ["get", "list", "watch"]
+  }
+}
+
+resource "kubernetes_role_binding_v1" "spring_cloud_k8s" {
+  metadata {
+    name      = "spring-cloud-k8s"
+    namespace = var.namespace
+  }
+
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "Role"
+    name      = "spring-cloud-k8s"
+  }
+
+  subject {
+    kind      = "ServiceAccount"
+    name      = "default"
+    namespace = var.namespace
+  }
+}
