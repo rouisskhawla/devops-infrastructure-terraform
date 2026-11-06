@@ -30,5 +30,4 @@ module "monitoring" {
 module "flagger" {
   source         = "../../modules/flagger"
   prometheus_url = module.monitoring.prometheus_url
-  
 }
