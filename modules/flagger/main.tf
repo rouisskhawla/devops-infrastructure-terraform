@@ -8,11 +8,15 @@ resource "helm_release" "flagger" {
 
   set = [
     {
-      name  = "metricsServer"
+      name  = "metricsServer",
       value = var.prometheus_url
     },
     {
-      name  = "meshProvider"
+      name  = "meshProvider",
+      value = "nginx"
+    },
+    {
+      name  = "ingressClass",
       value = "nginx"
     }
   ]
