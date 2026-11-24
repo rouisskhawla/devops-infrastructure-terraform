@@ -5,6 +5,7 @@ resource "helm_release" "prometheus_stack" {
   version          = "61.3.0"
   namespace        = "monitoring"
   create_namespace = true
+  force_update     = true
   set = [
     {
       name  = "prometheus.prometheusSpec.serviceMonitorSelectorNilUsesHelmValues"

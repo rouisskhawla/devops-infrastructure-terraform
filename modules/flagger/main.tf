@@ -5,6 +5,7 @@ resource "helm_release" "flagger" {
   namespace        = "flagger-system"
   create_namespace = true
   version          = "1.38.0"
+  force_update     = true
 
   set = [
     {
