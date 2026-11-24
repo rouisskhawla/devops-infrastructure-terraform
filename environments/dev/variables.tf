@@ -8,8 +8,8 @@ variable "cluster_ca_cert" {
 }
 
 variable "grafana_password" {
-  type      = string
+  type        = string
   description = "Grafana admin password"
-  sensitive = true
-  default   = "admin"
+  sensitive   = true
+  default     = "admin"
 }
